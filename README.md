@@ -15,4 +15,6 @@ Enables a DHT11 / DHT22 temperature / humidity sensor on any gpio pin (CSID0 by 
 
 Enables an SD card on MMC2 in high speed mode. It uses all 8 CSID pins.
 
+**spi2.dts**
 
+Enables the SPI2 interface for spidev.
