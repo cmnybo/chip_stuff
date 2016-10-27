@@ -1,0 +1,39 @@
+/*
+ * Copyright 2016 Cody Nybo
+ * 
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This file is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *
+ *
+ * This device tree overlay enables a BMP085 sensor on i2c2.
+*/
+
+/dts-v1/;
+/plugin/;
+
+
+/ {
+	compatible = "nextthing,chip", "allwinner,sun5i-r8";
+	fragment@0 {
+		target = <&i2c2>;
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			bmp085: pressure@77 {
+				compatible = "bosch,bmp085";
+				reg = <0x77>;
+				chip-id = <0x55>;
+				temp-measurement-period = <100>;
+				default-oversampling = <3>;
+			};	
+		};
+	};
+};

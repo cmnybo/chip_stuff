@@ -1,0 +1,69 @@
+/*
+ * Copyright 2016 Cody Nybo
+ * 
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This file is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *
+ *
+ * This device tree overlay enables SPIDEV on spi2.
+ * Pins Used:
+ * PE0  (CSICPK)   = CS0
+ * PE1  (CSICK)    = SCK
+ * PE2  (CSIHSYNC) = MOSI
+ * PE3  (CSIVSYNC) = MISO
+*/
+
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/pinctrl/sun4i-a10.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+    compatible = "nextthing,chip", "allwinner,sun5i-r8";
+	
+	fragment@0 {
+		target = <&spi2>;
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&spi2_pins>, <&spi2_cs0_pin>;                         /* SPI Pins */
+			status = "okay";
+			
+			spi2@0 {
+				compatible = "rohm,dh2228fv";                                  /* Works with SPIDEV */
+				reg = <0>;
+				spi-max-frequency = <100000000>;                               /* Maximum Frequency: 100 MHz */
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&pio>;
+		__overlay__ {
+			spi2_pins: spi2@0 {
+				allwinner,pins = "PE1", "PE2", "PE3";                          /* SPI Pins SCK, MOSI, MISO */
+				allwinner,function = "spi2";                                   /* Assign to SPI2 */
+				allwinner,drive = <SUN4I_PINCTRL_30_MA>;                       /* 30mA pin drive needed for high speed */
+				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;                      /* No pullups */
+			};
+			
+			spi2_cs0_pin: spi2_cs@0 {
+				allwinner,pins = "PE0";                                        /* Chip select pin PE0 (CS0) */
+				allwinner,function = "spi2";                                   /* Assign to SPI2 */
+				allwinner,drive = <SUN4I_PINCTRL_30_MA>;                       /* 30mA pin drive needed for high speed */
+				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;                      /* No pullups */
+			};
+		};
+	};
+};

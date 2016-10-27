@@ -21,8 +21,8 @@
  * PE7  (CSID3) = Data 3
  * PE8  (CSID4) = Command
  * PE9  (CSID5) = Clock
- * PE10 (CSID6) = Card Detect (low = card inserted)
- * PE11 (CSID7) = Write Protect (high = read only)
+ * PE10 (CSID6) = Card Detect
+ * PE11 (CSID7) = Write Protect (can be disabled to save a pin, card defaults to RW)
 */
 
 /dts-v1/;

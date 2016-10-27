@@ -26,31 +26,31 @@
 #include <dt-bindings/gpio/gpio.h>
 
 /{
-    compatible = "nextthing,chip", "allwinner,sun5i-r8"; 
-    
-    fragment@0 {
-        target-path = "/";
-        __overlay__ {
-            dht11: dht11@0 {
-                compatible = "dht11";
-                gpios = <&pio 4 4 GPIO_ACTIVE_HIGH>;                            /* DHT11 Pin PE4 (CSID0) */
-                pinctrl-names = "default";
-                pinctrl-0 = <&chip_dht11_pin>;
-                status = "okay";
-            };
-        };
+  compatible = "nextthing,chip", "allwinner,sun5i-r8"; 
+  
+  fragment@0 {
+    target-path = "/";
+    __overlay__ {
+      dht11: dht11@0 {
+        compatible = "dht11";
+        gpios = <&pio 4 4 GPIO_ACTIVE_HIGH>;	/* dht11 pin PE4 (CSID0)         */
+        pinctrl-names = "default";
+        pinctrl-0 = <&chip_dht11_pin>;
+        status = "okay";
+      };
     };
-    
-    fragment@1 {
-        target = <&pio>;
-        __overlay__ {
-            chip_dht11_pin: chip_dht11_pin@0 {
-                allwinner,pins = "PE4";
-                allwinner,function = "gpio_in";
-                allwinner,drive = <SUN4I_PINCTRL_10_MA>;
-                allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
-            };
-        };
+  };
+  
+  fragment@1 {
+    target = <&pio>;
+    __overlay__ {
+      chip_dht11_pin: chip_dht11_pin@0 {
+        allwinner,pins = "PE4";
+        allwinner,function = "gpio_in";
+        allwinner,drive = <SUN4I_PINCTRL_10_MA>;
+        allwinner,pull = <SUN4I_PINCTRL_PULL_UP>;
+      };
     };
-    
+  };
+  
 };
